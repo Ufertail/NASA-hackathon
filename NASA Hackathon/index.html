@@ -13,52 +13,63 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
 </head>
 <body>
-    <nav>
-        <ul class="sidebar">
-            <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
-            <li><a href="#" class="buttons">Some text</a></li>
-            <li><a href="#" class="buttons">Some text</a></li>
-            <li><a href="#" class="buttons">Some text</a></li>
-            <li><a href="#" class="buttons">Some text</a></li>
-            <li><a href="#" class="buttons">Some text</a></li>
-        </ul>
-        <ul>
-            <li class="some"><a href="https://youtu.be/R8GomIRKEVE">Climate Change</a></li>
-            <li><a href="story.html">Story</a></li>
-            <li class="menu-button" onclick=showSidebar()><a href="#">Choose region</a></li>
-        </ul>
-    </nav>
-    <div class="passiveMessage"></div>
-
-    <script>
-      function showSidebar(){
-        const sidebar = document.querySelector('.sidebar')
-        sidebar.style.display = 'flex'
-        const but = document.querySelector(".menu-button")
-        but.style.display = "none"
-      }
-      function hideSidebar(){
-        const sidebar = document.querySelector('.sidebar')
-        sidebar.style.display = 'none'
-        const but = document.querySelector(".menu-button")
-        but.style.display = "flex"
-      }
-
+  <nav>
+      <ul class="sidebar">
+          <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_shm_surface-flask_1_ccgg_event.json">Shemya Islands US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_mid_surface-flask_1_ccgg_event.json">Sand Island US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_smo_surface-flask_1_ccgg_event.json">Tutuila American Samoa</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_cba_surface-flask_1_ccgg_event.json">Cold Bay US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_mlo_surface-flask_1_ccgg_event.json">Mauna Loa US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_kum_surface-flask_1_ccgg_event.json">Cape Kumukahi US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_chr_surface-flask_1_ccgg_event.json">Christmas Island  Kiribati</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_mbc_surface-flask_1_ccgg_event.json">Could Bay Territories Canada</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_brw_surface-flask_1_ccgg_event.json">BABO US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_opw_surface-flask_1_ccgg_event.json">Olympic Peninsula US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_cmo_surface-flask_1_ccgg_event.json">Cape Meares US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/pfp/surface/co2_mbo_surface-pfp_1_ccgg_event.json">BO US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/pfp/surface/co2_wgc_surface-pfp_1_ccgg_event.json">Walnut Grove US</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/pfp/surface/co2_bao_surface-pfp_1_ccgg_event.json">Boulder Atmospheric</a></li>
+          <li><a href="#" class="buttons" val="https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/pfp/surface/co2_lef_surface-pfp_1_ccgg_event.json">Park Falls US</a></li>
+      </ul>
+      <ul>
+          <li class="some"><a href="https://youtu.be/R8GomIRKEVE">Climate Change <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Video)</a></li>
+          <li><a href="story.html">Story</a></li>
+          <li class="menu-button" onclick=showSidebar()><a href="#">Choose region</a></li>
+      </ul>
+  </nav>
+  <div class="passiveMessage"></div>
+  
+  <script>
+    function showSidebar(){
+      const sidebar = document.querySelector('.sidebar')
+      sidebar.style.display = 'flex'
+      const but = document.querySelector(".menu-button")
+      but.style.display = "none"
+    }
     
-
-      
-    </script>
-    <div id="scene"></div>
-
+    function hideSidebar(){
+      const sidebar = document.querySelector('.sidebar')
+      sidebar.style.display = 'none'
+      const but = document.querySelector(".menu-button")
+      but.style.display = "flex"
+    }
     
-
     
-
-
     
-    <script src="script.js"></script>
+  </script>
+  <div id="scene"></div>
+
+  <div id="myChart" class="canvasIsPassive"></canvas>
+
+  
+  
+  
+  <script src="script.js"></script>
 </body>
 </html>

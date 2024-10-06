@@ -2,32 +2,32 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Protest Strike", sans-serif;
+    letter-spacing: 2px;
+    font-size: 22px;
 }
 body{
     background: #1D212B;
+
 }
 
 
 
 a{
     position: absolute;
-    top: 0rem;
+    top: 2rem;
     left: 95%;
     transform: translateX(-50%);
     color: #1D212B;
     font-size: 40px;
 }
 
-
-
-
 section{
     
     display: grid;
     place-items: center;
     align-content: center;
-    min-height: 101vh;
+    min-height: 150vh;
 }
 section:nth-child(1){
     color: #fff;
@@ -40,6 +40,13 @@ section:nth-child(3){
     color: #fff;
 }
 section:nth-child(4){
+    color: #1D212B;
+    background: #fff;
+}
+section:nth-child(5){
+    color: #fff;
+}
+section:nth-child(6){
     color: #1D212B;
     background: #fff;
 }
@@ -68,4 +75,21 @@ section h2{
     opacity: 1;
     filter: blur(0);
     transform: translateX(0);
+}
+img{
+    position: relative;
+    left: 30%;
+
+}
+.firstImage{
+    margin: 20px;
+    padding: 30px;
+}
+img:nth-child(1){
+    top: -10px;
+    left: 30%;
+}
+img:nth-child(2){
+    top: -100px;
+    left: 20%;
 }

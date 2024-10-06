@@ -1,7 +1,7 @@
 const buttons = document.querySelectorAll(".buttons")
 const menuButton = document.querySelector(".menu-button")
 const sideBar = document.querySelector(".sidebar")
-const message = document.querySelector(".passiveMessage")
+const message = document.getElementById("myChart")
 
 
 
@@ -17,23 +17,33 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById("scene").appendChild(renderer.domElement)
 camera.position.set(0, 2, 5)
 
-menuButton.addEventListener("click", (e) =>{
-    model.position.set(-2.5, 0, 0)
-    message.classList.add("activeMessage")
-})
+if (menuButton) {
+    menuButton.addEventListener("click", (e) => {
+        model.position.set(-2.5, 0, 0);
+        if (message) message.classList.add("canvasIsActive");
+    });
+}
 
-sideBar.addEventListener("click", (e) =>{
-    model.position.set(0, 0, 0)
-    message.classList.remove("activeMessage")
-})
+if (sideBar) {
+    sideBar.addEventListener("click", (e) => {
+        model.position.set(0, 0, 0);
+        if (message) message.classList.remove("canvasIsActive");
+    });
+}
 
-buttons.forEach((ele) => {
-    ele.addEventListener("click", (e) => {
-        console.log(e.target)
-        message.classList.add("activeMessage")
+
+buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        console.log(e.target);  // Логируем, на какую кнопку нажали
         
-    })
-})
+        // Двигаем модель (замените координаты по вашему желанию)
+        model.position.set(-2.5, 0, 0);
+        
+        // Если элемент message существует, добавляем класс "canvasIsActive"
+        canvas(e.target.val, e.target.innerHTML)
+    });
+});
+
 
 
 
@@ -70,3 +80,80 @@ function render(){
 render()
 
 
+function canvas(link, name){
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const apiUrl = link;
+
+    const fetchUrl = proxyUrl + apiUrl;
+
+    async function fetchDataAndCreateChart() {
+        try {
+            const response = await fetch(fetchUrl);
+
+            if (!response.ok) {
+                new Error('Ошибка сети: ' + response.status);
+            }
+
+            const data = await response.json();
+
+            const chartData = data.map(item => ({
+                x: new Date(item.date),
+                y: item.value
+            }));
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            const myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: name,
+                        data: chartData,
+                        backgroundColor: 'rgba(255, 255, 255, 255)',
+                        borderColor: 'rgba(128, 0, 128, 1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1,
+                        showLine: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month',
+                                displayFormats: {
+                                    month: 'LLLL yyyy'
+                                },
+                                tooltipFormat: 'LLLL yyyy'
+                            },
+                            adapters: {
+                                date: {
+                                    locale: 'en'
+                                }
+                            },
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Observation Date/Time'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                //todo: изменить текст
+                                text: 'TODO Значение'
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    fetchDataAndCreateChart();
+}
