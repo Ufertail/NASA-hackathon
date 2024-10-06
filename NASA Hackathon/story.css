@@ -7,6 +7,21 @@
 body{
     background: #1D212B;
 }
+
+
+
+a{
+    position: absolute;
+    top: 0rem;
+    left: 95%;
+    transform: translateX(-50%);
+    color: #1D212B;
+    font-size: 40px;
+}
+
+
+
+
 section{
     
     display: grid;

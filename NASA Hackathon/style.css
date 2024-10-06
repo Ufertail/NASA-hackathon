@@ -14,7 +14,6 @@ header{
     transform: translateX(-50%);
     color: #fff;
     font-size: 80px;
-    pointer-events: none;
 }
 
 nav{
@@ -44,9 +43,9 @@ nav a{
 nav a:hover{
   background-color: #f0f0f0;
 }
-nav li:first-child{
+nav li:nth-child(5){
     margin-right: auto;
-  }
+}
 .sidebar{
   position: fixed;
   top: 0; 
@@ -67,6 +66,9 @@ nav li:first-child{
 }
 .sidebar a{
     width: 100%;
+}
+.menu-button{
+  display: none;
 }
 .menu-button{
     display: block;
@@ -100,3 +102,4 @@ nav li:first-child{
     width: 500px;
     border-radius: 40px;
 }
+
