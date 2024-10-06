@@ -9,94 +9,49 @@
     <script src="lib/GLTFLoader.js"></script>
     <script src="lib/OrbitControls.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>IBEEZ</header>
-    <div id="scene"></div>
-
-    <canvas id="myChart" width="1600" height="800"></canvas>
+    <nav>
+        <ul class="sidebar">
+          <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
+          <li><a href="#" class="buttons">Some text</a></li>
+          <li><a href="#" class="buttons">Some text</a></li>
+          <li><a href="#" class="buttons">Some text</a></li>
+          <li><a href="#" class="buttons">Some text</a></li>
+          <li><a href="#" class="buttons">Some text</a></li>
+        </ul>
+        <ul>
+          <li class="menu-button" onclick=showSidebar()><a href="#">Choose region</a></li>
+        </ul>
+    </nav>
+    <div class="passiveMessage"></div>
 
     <script>
-        //todo: убрать proxyUrl, и вызывать напрямую apiUrl
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const apiUrl = 'https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_wlg_surface-flask_1_ccgg_event.json';
+      function showSidebar(){
+        const sidebar = document.querySelector('.sidebar')
+        sidebar.style.display = 'flex'
+        const but = document.querySelector(".menu-button")
+        but.style.display = "none"
+      }
+      function hideSidebar(){
+        const sidebar = document.querySelector('.sidebar')
+        sidebar.style.display = 'none'
+        const but = document.querySelector(".menu-button")
+        but.style.display = "flex"
+      }
 
-        const fetchUrl = proxyUrl + apiUrl;
+    
 
-        async function fetchDataAndCreateChart() {
-            try {
-                const response = await fetch(fetchUrl);
-
-                if (!response.ok) {
-                    new Error('Ошибка сети: ' + response.status);
-                }
-
-                const data = await response.json();
-
-                const chartData = data.map(item => ({
-                    x: new Date(item.date),
-                    y: item.value
-                }));
-
-                const ctx = document.getElementById('myChart').getContext('2d');
-
-                const myChart = new Chart(ctx, {
-                    type: 'scatter',
-                    data: {
-                        datasets: [{
-                            label: 'Observed CO, Concentration (Fiasio)',
-                            data: chartData,
-                            backgroundColor: 'rgba(255, 255, 255, 255)',
-                            borderColor: 'rgba(128, 0, 128, 1)',
-                            borderWidth: 3,
-                            fill: false,
-                            tension: 0.1,
-                            showLine: false,
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            x: {
-                                type: 'time',
-                                time: {
-                                    unit: 'month',
-                                    displayFormats: {
-                                        month: 'LLLL yyyy'
-                                    },
-                                    tooltipFormat: 'LLLL yyyy'
-                                },
-                                adapters: {
-                                    date: {
-                                        locale: 'en'
-                                    }
-                                },
-                                display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Observation Date/Time'
-                                }
-                            },
-                            y: {
-                                display: true,
-                                title: {
-                                    display: true,
-                                    //todo: изменить текст
-                                    text: 'TODO Значение'
-                                }
-                            }
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
-        }
-
-        fetchDataAndCreateChart();
+      
     </script>
+    <div id="scene"></div>
+
+    
+
+    
 
 
     
