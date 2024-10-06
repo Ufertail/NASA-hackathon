@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasa Hackathon</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="lib/three.min.js"></script>
+    <script src="lib/GLTFLoader.js"></script>
+    <script src="lib/OrbitControls.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+</head>
+<body>
+    <header>IBEEZ</header>
+    <div id="scene"></div>
+
+    <canvas id="myChart" width="1600" height="800"></canvas>
+
+    <script>
+        //todo: убрать proxyUrl, и вызывать напрямую apiUrl
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const apiUrl = 'https://earth.gov/ghgcenter/custom-interfaces/noaa-gggrn-ghg-concentrations/data/processed/co2/flask/surface/co2_wlg_surface-flask_1_ccgg_event.json';
+
+        const fetchUrl = proxyUrl + apiUrl;
+
+        async function fetchDataAndCreateChart() {
+            try {
+                const response = await fetch(fetchUrl);
+
+                if (!response.ok) {
+                    new Error('Ошибка сети: ' + response.status);
+                }
+
+                const data = await response.json();
+
+                const chartData = data.map(item => ({
+                    x: new Date(item.date),
+                    y: item.value
+                }));
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                const myChart = new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Observed CO, Concentration (Fiasio)',
+                            data: chartData,
+                            backgroundColor: 'rgba(255, 255, 255, 255)',
+                            borderColor: 'rgba(128, 0, 128, 1)',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.1,
+                            showLine: false,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'month',
+                                    displayFormats: {
+                                        month: 'LLLL yyyy'
+                                    },
+                                    tooltipFormat: 'LLLL yyyy'
+                                },
+                                adapters: {
+                                    date: {
+                                        locale: 'en'
+                                    }
+                                },
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Observation Date/Time'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    //todo: изменить текст
+                                    text: 'TODO Значение'
+                                }
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        fetchDataAndCreateChart();
+    </script>
+
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
